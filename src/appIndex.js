@@ -9,6 +9,16 @@ app.use(cors());
 
 const repositories = [];
 
+app.get('/repositories', (request, response) => {
+    const {  title } = request.body;
+
+    const result = title 
+        ? repositories.filter(repository => repository.title.include(title)) 
+        : repositories;
+
+    return response.json(result);
+});
+
 app.post('/repositories', (request, response) => {
     const { title, url, techs } = request.body;
 
@@ -24,16 +34,6 @@ app.post('/repositories', (request, response) => {
 
     return response.json(repository);
 
-});
-
-app.get('/repositories', (request, response) => {
-    const {  title } = request.body;
-
-    const result = title 
-        ? repositories.filter(repository => repository.title.include(title)) 
-        : repositories;
-
-    return response.json(result);
 });
 
 app.put('/repositories/:id', (request ,response) => {
